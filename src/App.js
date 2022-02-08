@@ -1,8 +1,6 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-//modal
-import SignupModal from './modal/SignupModal';
 //pages
 import Home from './pages/Home';
 
