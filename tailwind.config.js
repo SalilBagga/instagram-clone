@@ -122,6 +122,7 @@ module.exports = {
         24: '6rem',
         32: '8rem',
         cust: 'calc(100vmin - 219px)',
+        '9/5': '95%',
       },
       borderWidth: {
         1: '1px',

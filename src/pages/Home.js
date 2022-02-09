@@ -29,9 +29,11 @@ export default function Home() {
   const handleUploadimgClose = () => setUploadopen(false);
 
   useEffect(() => {
-    db.collection('posts').onSnapshot((snapshot) => {
-      setPostdetails(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-    });
+    db.collection('posts')
+      .orderBy('timestamp', 'desc')
+      .onSnapshot((snapshot) => {
+        setPostdetails(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+      });
   }, []);
 
   useEffect(() => {
@@ -66,9 +68,11 @@ export default function Home() {
       />
       <LoginModal handleLoginClose={handleLoginClose} loginopen={loginopen} />
       <SignupModal handleClose={handleClose} open={open} />
-      {postdetails.map(({ id, post }) => (
-        <Post key={id} username={post.username} caption={post.caption} imgURL={post.imgURL} />
-      ))}
+      <div className="pt-20">
+        {postdetails.map(({ id, post }) => (
+          <Post key={id} postid={id} post={post} username={displayName} />
+        ))}
+      </div>
     </div>
   );
 }
