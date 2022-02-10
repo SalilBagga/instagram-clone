@@ -48,7 +48,7 @@ export default function Home() {
     return () => {
       unsubscribe();
     };
-  }, [user]);
+  }, [user, auth]);
 
   return (
     <div>
@@ -69,9 +69,15 @@ export default function Home() {
       <LoginModal handleLoginClose={handleLoginClose} loginopen={loginopen} />
       <SignupModal handleClose={handleClose} open={open} />
 
-      {postdetails.map(({ id, post }) => (
-        <Post key={id} postid={id} post={post} username={user ? user.displayName : null} />
-      ))}
+      {user ? (
+        postdetails.map(({ id, post }) => (
+          <Post key={id} postid={id} post={post} username={user ? user.displayName : null} />
+        ))
+      ) : (
+        <div className="mt-4  max-w-screen-sm mx-auto my-2 bg-white border rounded text-center">
+          <h1 className="p-4">Please SignUp or Login</h1>
+        </div>
+      )}
     </div>
   );
 }

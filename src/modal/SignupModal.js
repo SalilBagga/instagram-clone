@@ -34,6 +34,16 @@ export default function SignupModal({ handleClose, open }) {
         authuser.user.updateProfile({
           displayName: username,
         });
+
+        auth
+          .signInWithEmailAndPassword(email, password)
+          .then(() => {
+            window.location.reload();
+            setEmail('');
+            setPassword('');
+            setUsername('');
+          })
+          .catch((err) => alert(err.message));
       })
       .catch((err) => alert(err.message));
     handleClose();
