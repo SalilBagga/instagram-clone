@@ -17,7 +17,6 @@ export default function Home() {
   const [loginopen, setLoginopen] = useState(false);
   const [uploadopen, setUploadopen] = useState(false);
   const [user, setUser] = useState(null);
-  const [displayName, setDisplayName] = useState(null);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -39,8 +38,8 @@ export default function Home() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authuser) => {
       if (authuser) {
-        console.log(authuser.multiFactor.user.displayName);
-        setDisplayName(authuser.multiFactor.user.displayName);
+        console.log(authuser.displayName);
+
         setUser(authuser);
       } else {
         setUser(null);
@@ -50,6 +49,7 @@ export default function Home() {
       unsubscribe();
     };
   }, [user]);
+
   return (
     <div>
       <Header
@@ -59,20 +59,19 @@ export default function Home() {
         handleLoginOpen={handleLoginOpen}
         uploadopen={uploadopen}
         handleUploadimgOpen={handleUploadimgOpen}
-        displayName={displayName}
+        displayName={user ? user.displayName : null}
       />
       <ImageUploadModal
         uploadopen={uploadopen}
         handleUploadimgClose={handleUploadimgClose}
-        username={displayName}
+        username={user ? user.displayName : null}
       />
       <LoginModal handleLoginClose={handleLoginClose} loginopen={loginopen} />
       <SignupModal handleClose={handleClose} open={open} />
-      <div className="pt-20">
-        {postdetails.map(({ id, post }) => (
-          <Post key={id} postid={id} post={post} username={displayName} />
-        ))}
-      </div>
+
+      {postdetails.map(({ id, post }) => (
+        <Post key={id} postid={id} post={post} username={user ? user.displayName : null} />
+      ))}
     </div>
   );
 }

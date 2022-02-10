@@ -59,22 +59,24 @@ export default function Post({ post, postid, username }) {
               </h4>
             ))}
         </div>
-        <div className="px-4 pb-4">
-          <form className="flex">
-            <Input
-              type="text"
-              placeholder="Enter Comment......"
-              className="w-full "
-              value={postComment}
-              onChange={(e) => {
-                setPostComment(e.target.value);
-              }}
-            />
-            <button type="submit" disabled={!postComment} onClick={postCommentFunction}>
-              Post
-            </button>
-          </form>
-        </div>
+        {username && (
+          <div className="px-4 pb-4">
+            <form className="flex">
+              <Input
+                type="text"
+                placeholder="Enter Comment......"
+                className="w-full "
+                value={postComment}
+                onChange={(e) => {
+                  setPostComment(e.target.value);
+                }}
+              />
+              <button type="submit" disabled={!postComment} onClick={postCommentFunction}>
+                Post
+              </button>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );
